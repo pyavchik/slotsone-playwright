@@ -18,9 +18,37 @@ export default defineConfig({
     timeout: 10_000,
   },
   projects: [
+    // Existing non-admin tests
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      testIgnore: '**/admin/**',
+    },
+
+    // Admin auth setup
+    {
+      name: 'admin-setup',
+      testMatch: '**/admin/admin.setup.ts',
+      use: { ...devices['Desktop Chrome'] },
+    },
+
+    // Admin login tests (no auth needed)
+    {
+      name: 'admin-login',
+      testMatch: '**/admin/login.spec.ts',
+      use: { ...devices['Desktop Chrome'] },
+    },
+
+    // Admin tests (authenticated via storageState)
+    {
+      name: 'admin',
+      testDir: './tests/admin',
+      testIgnore: ['admin.setup.ts', 'login.spec.ts'],
+      dependencies: ['admin-setup'],
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: '.auth/admin.json',
+      },
     },
   ],
 });
