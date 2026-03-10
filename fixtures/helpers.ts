@@ -5,6 +5,12 @@ import {
   makeAuthTokenResponse,
   makeGameInitResponse,
   makeSpinResponse,
+  makeRouletteInitResponse,
+  makeRouletteSpinResponse,
+  makeAmericanRouletteInitResponse,
+  makeAmericanRouletteSpinResponse,
+  makeHistoryResponse,
+  makeRoundDetailResponse,
 } from './mock-data';
 
 // ── Auth ───────────────────────────────────────────────────────────────
@@ -124,6 +130,129 @@ export async function mockLogout(context: BrowserContext) {
   );
 }
 
+// ── Error mocks ───────────────────────────────────────────────────────
+
+/** Mock /spin to return a server error. */
+export async function mockSpinError(
+  context: BrowserContext,
+  status = 500,
+  message = 'Internal server error',
+) {
+  await context.route('**/api/v1/spin', (route) =>
+    route.fulfill({
+      status,
+      contentType: 'application/json',
+      body: JSON.stringify({ error: message }),
+    }),
+  );
+}
+
+/** Mock /game/init to return an error. */
+export async function mockGameInitError(
+  context: BrowserContext,
+  status = 500,
+  message = 'Game initialization failed',
+) {
+  await context.route('**/api/v1/game/init', (route) =>
+    route.fulfill({
+      status,
+      contentType: 'application/json',
+      body: JSON.stringify({ error: message }),
+    }),
+  );
+}
+
+// ── Roulette ──────────────────────────────────────────────────────────
+
+/** Mock /roulette/init to return a valid session. */
+export async function mockRouletteInit(context: BrowserContext) {
+  await context.route('**/api/v1/roulette/init', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(makeRouletteInitResponse()),
+    }),
+  );
+}
+
+/** Mock /roulette/spin to return a result. */
+export async function mockRouletteSpin(
+  context: BrowserContext,
+  overrides?: Record<string, unknown>,
+) {
+  await context.route('**/api/v1/roulette/spin', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(makeRouletteSpinResponse(overrides)),
+    }),
+  );
+}
+
+/** Mock /american-roulette/init to return a valid session. */
+export async function mockAmericanRouletteInit(context: BrowserContext) {
+  await context.route('**/api/v1/american-roulette/init', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(makeAmericanRouletteInitResponse()),
+    }),
+  );
+}
+
+/** Mock /american-roulette/spin to return a result. */
+export async function mockAmericanRouletteSpin(
+  context: BrowserContext,
+  overrides?: Record<string, unknown>,
+) {
+  await context.route('**/api/v1/american-roulette/spin', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(makeAmericanRouletteSpinResponse(overrides)),
+    }),
+  );
+}
+
+// ── History ───────────────────────────────────────────────────────────
+
+/** Mock /history endpoint. */
+export async function mockHistory(
+  context: BrowserContext,
+  overrides?: Record<string, unknown>,
+) {
+  await context.route('**/api/v1/history?*', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(makeHistoryResponse(overrides)),
+    }),
+  );
+  // Also match without query params
+  await context.route('**/api/v1/history', (route) => {
+    if (route.request().url().includes('?')) return route.fallback();
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(makeHistoryResponse(overrides)),
+    });
+  });
+}
+
+/** Mock /history/:id round detail endpoint. */
+export async function mockRoundDetail(
+  context: BrowserContext,
+  overrides?: Record<string, unknown>,
+) {
+  await context.route('**/api/v1/history/spin_*', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(makeRoundDetailResponse(overrides)),
+    }),
+  );
+}
+
 // ── Convenience bundles ────────────────────────────────────────────────
 
 /** Set up all mocks needed for authenticated game tests. */
@@ -131,5 +260,29 @@ export async function mockGameApis(context: BrowserContext) {
   await mockAuth(context);
   await mockGameInit(context);
   await mockSpin(context);
+  await mockImages(context);
+}
+
+/** Set up mocks for European roulette tests. */
+export async function mockRouletteApis(context: BrowserContext) {
+  await mockAuth(context);
+  await mockRouletteInit(context);
+  await mockRouletteSpin(context);
+  await mockImages(context);
+}
+
+/** Set up mocks for American roulette tests. */
+export async function mockAmericanRouletteApis(context: BrowserContext) {
+  await mockAuth(context);
+  await mockAmericanRouletteInit(context);
+  await mockAmericanRouletteSpin(context);
+  await mockImages(context);
+}
+
+/** Set up mocks for history page tests. */
+export async function mockHistoryApis(context: BrowserContext) {
+  await mockAuth(context);
+  await mockHistory(context);
+  await mockRoundDetail(context);
   await mockImages(context);
 }

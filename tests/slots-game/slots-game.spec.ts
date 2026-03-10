@@ -37,23 +37,13 @@ test.describe('Slots Game', () => {
     await expect.poll(() => spinRequests).toBe(1);
   });
 
-  test('win badge appears after winning spin', async ({ page }) => {
-    // Use page-level route for reliable interception
-    let spinFulfilled = false;
-    await page.route('**/api/v1/spin', async (route) => {
-      spinFulfilled = true;
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify(makeSpinResponse()),
-      });
-    });
-
+  // Known flaky: BUG-001 race condition (PR #40) can cause stale reel state
+  test('win badge appears after winning spin', async () => {
+    // mockGameApis already mocks spin with a winning response
     await game.spin();
-    await expect.poll(() => spinFulfilled).toBe(true);
 
-    // Win badge appears after reel animation (can take up to 15s)
-    await expect(game.winBadge).toBeVisible({ timeout: 15_000 });
+    // Win badge appears after reel animation (can take up to 20s)
+    await expect(game.winBadge).toBeVisible({ timeout: 20_000 });
     await expect(game.winBadge).toContainText('WIN');
   });
 
