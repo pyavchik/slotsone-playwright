@@ -10,4 +10,5 @@ node_modules/
 /playwright/.cache/
 /playwright/.auth/
 .auth/
+.env
 CLAUDE.md
