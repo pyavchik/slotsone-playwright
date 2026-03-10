@@ -19,24 +19,14 @@ pipeline {
                 sh 'npx playwright test || true'
             }
         }
-
-        stage('Generate Allure Report') {
-            steps {
-                sh 'allure generate allure-results --clean -o allure-report'
-            }
-        }
     }
 
     post {
         always {
-            publishHTML(target: [
-                reportDir: 'allure-report',
-                reportFiles: 'index.html',
-                reportName: 'Allure Report',
-                keepAll: true,
-                alwaysLinkToLastBuild: true,
-                allowMissing: true
-            ])
+            allure includeProperties: false,
+                   jdk: '',
+                   results: [[path: 'allure-results']]
+
             publishHTML(target: [
                 reportDir: 'playwright-report',
                 reportFiles: 'index.html',
@@ -45,6 +35,7 @@ pipeline {
                 alwaysLinkToLastBuild: true,
                 allowMissing: true
             ])
+
             archiveArtifacts artifacts: 'test-results/**/*', allowEmptyArchive: true
         }
     }
