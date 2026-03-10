@@ -1,6 +1,7 @@
 
 # IDE
 .idea/
+.claude
 
 # Playwright
 node_modules/
@@ -12,3 +13,5 @@ node_modules/
 .auth/
 .env
 CLAUDE.md
+/allure-results/
+/allure-report/

@@ -9,11 +9,15 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter: [
+    ['list'],
+    ['html', { open: 'never' }],
+    ['allure-playwright'],
+  ],
   use: {
     baseURL: 'https://pyavchik.space',
     actionTimeout: 10_000,
-    screenshot: 'only-on-failure',
+    screenshot: 'on',
     video: 'retain-on-failure',
     trace: 'on-first-retry',
   },

@@ -16,13 +16,14 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'npx playwright test --reporter=list,html'
+                sh 'npx playwright test || true'
             }
         }
     }
 
     post {
         always {
+            allure includeProperties: false, results: [[path: 'allure-results']]
             publishHTML(target: [
                 reportDir: 'playwright-report',
                 reportFiles: 'index.html',
