@@ -7,7 +7,17 @@ pipeline {
         CI             = 'true'
     }
 
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '3'))
+    }
+
     stages {
+        stage('Clean') {
+            steps {
+                sh 'rm -rf allure-results allure-report playwright-report test-results'
+            }
+        }
+
         stage('Install') {
             steps {
                 sh 'npm ci'
@@ -47,8 +57,6 @@ pipeline {
                 alwaysLinkToLastBuild: true,
                 allowMissing: true
             ])
-
-            archiveArtifacts artifacts: 'test-results/**/*', allowEmptyArchive: true
         }
     }
 }
