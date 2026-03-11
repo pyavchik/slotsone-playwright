@@ -2,7 +2,7 @@ import { test, expect } from '../base.fixture';
 import { HistoryPage } from '../../pages/history.page';
 import { mockHistoryApis } from '../../fixtures/helpers';
 
-test.describe('Game History @allure.label.parentSuite:History @allure.label.suite:Game History', () => {
+test.describe('Game History', () => {
   let history: HistoryPage;
 
   test.beforeEach(async ({ page, context }) => {

@@ -1,7 +1,7 @@
 import { test, expect } from '../base.fixture';
 import { CVLandingPage } from '../../pages/cv-landing.page';
 
-test.describe('CV Landing Page @allure.label.parentSuite:CV_Landing @allure.label.suite:Landing Page', () => {
+test.describe('CV Landing Page', () => {
   let cv: CVLandingPage;
 
   test.beforeEach(async ({ page }) => {

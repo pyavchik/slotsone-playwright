@@ -14,7 +14,7 @@ import {
 // so we start watching for it BEFORE spinning to avoid missing it.
 // Known flakiness: BUG-001 race condition (PR #40) causes stale reel state,
 // which can delay or skip the win overlay on some runs.
-test.describe('Win Overlay Tiers @allure.label.parentSuite:Slots_Game @allure.label.suite:Win Overlay', () => {
+test.describe('Win Overlay Tiers', () => {
   test.describe.configure({ timeout: 60_000, retries: 1 });
   let game: GamePage;
 

@@ -2,7 +2,7 @@ import { test, expect } from '../base.fixture';
 import { GamePage } from '../../pages/game.page';
 import { mockGameApis } from '../../fixtures/helpers';
 
-test.describe('Keyboard Controls @allure.label.parentSuite:Slots_Game @allure.label.suite:Keyboard', () => {
+test.describe('Keyboard Controls', () => {
   let game: GamePage;
 
   test.beforeEach(async ({ page, context }) => {

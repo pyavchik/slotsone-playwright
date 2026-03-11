@@ -1,7 +1,7 @@
 import { test, expect } from '../base.fixture';
 import { AdminDashboardPage } from '../../pages/admin/dashboard.page';
 
-test.describe('Admin Dashboard @allure.label.parentSuite:Admin_Panel @allure.label.suite:Dashboard', () => {
+test.describe('Admin Dashboard', () => {
   let dashboard: AdminDashboardPage;
 
   test.beforeEach(async ({ page }) => {
