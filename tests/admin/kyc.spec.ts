@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../base.fixture';
 import { AdminKycPage } from '../../pages/admin/kyc.page';
 
 test.describe('Admin KYC', () => {

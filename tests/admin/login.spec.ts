@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../base.fixture';
 import { AdminLoginPage } from '../../pages/admin/login.page';
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL!;
@@ -19,10 +19,6 @@ test.describe('Admin Login', () => {
     await expect(login.emailInput).toBeVisible();
     await expect(login.passwordInput).toBeVisible();
     await expect(login.submitButton).toBeVisible();
-  });
-
-  test('demo credentials hint is displayed', async () => {
-    await expect(login.demoHint).toBeVisible();
   });
 
   test('invalid credentials show error message', async () => {

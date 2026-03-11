@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../base.fixture';
 import { GamePage } from '../../pages/game.page';
 import { mockAuth, mockGameInit, mockImages } from '../../fixtures/helpers';
 import {

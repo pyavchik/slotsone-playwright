@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../base.fixture';
 import { AdminPlayersPage } from '../../pages/admin/players.page';
 import { AdminPlayerDetailPage } from '../../pages/admin/player-detail.page';
 
@@ -23,6 +23,7 @@ test.describe('Admin Player Detail', () => {
   });
 
   test('stat cards are displayed', async () => {
+    await expect(detail.statCards.first()).toBeVisible();
     const statCount = await detail.statCards.count();
     expect(statCount).toBeGreaterThanOrEqual(3);
   });

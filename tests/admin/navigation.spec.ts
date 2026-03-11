@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../base.fixture';
 
 const NAV_ITEMS = [
   { label: 'Dashboard', path: '/admin' },

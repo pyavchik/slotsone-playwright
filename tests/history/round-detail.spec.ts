@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../base.fixture';
 import { RoundDetailPage } from '../../pages/round-detail.page';
 import { mockAuth, mockImages, mockRoundDetail } from '../../fixtures/helpers';
 
@@ -26,9 +26,7 @@ test.describe('Round Detail', () => {
     await expect(detail.reelCells).toHaveCount(15);
   });
 
-  // Note: winningCells set is created but never populated in RoundDetail.tsx
-  // This is a known frontend bug — winning cells aren't highlighted
-  test.skip('winning cells are highlighted', async () => {
+  test('winning cells are highlighted', async () => {
     const winCount = await detail.winCells.count();
     expect(winCount).toBeGreaterThan(0);
   });
