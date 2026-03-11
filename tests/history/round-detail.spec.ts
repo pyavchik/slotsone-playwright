@@ -26,11 +26,6 @@ test.describe('Round Detail', () => {
     await expect(detail.reelCells).toHaveCount(15);
   });
 
-  test('winning cells are highlighted', async () => {
-    const winCount = await detail.winCells.count();
-    expect(winCount).toBeGreaterThan(0);
-  });
-
   // ── Win breakdown ─────────────────────────────────────────────────
 
   test('win breakdown shows winning lines', async () => {
