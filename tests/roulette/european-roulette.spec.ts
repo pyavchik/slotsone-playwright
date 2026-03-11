@@ -2,7 +2,7 @@ import { test, expect } from '../base.fixture';
 import { RoulettePage } from '../../pages/roulette.page';
 import { mockRouletteApis } from '../../fixtures/helpers';
 
-test.describe('European Roulette', () => {
+test.describe('European Roulette @allure.label.parentSuite:Roulette @allure.label.suite:European Roulette', () => {
   let roulette: RoulettePage;
 
   test.beforeEach(async ({ page, context }) => {

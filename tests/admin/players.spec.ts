@@ -1,7 +1,7 @@
 import { test, expect } from '../base.fixture';
 import { AdminPlayersPage } from '../../pages/admin/players.page';
 
-test.describe('Admin Players', () => {
+test.describe('Admin Players @allure.label.parentSuite:Admin_Panel @allure.label.suite:Players', () => {
   let players: AdminPlayersPage;
 
   test.beforeEach(async ({ page }) => {

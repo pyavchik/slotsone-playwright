@@ -3,7 +3,7 @@ import { GamePage } from '../../pages/game.page';
 import { mockGameApis, mockLogout } from '../../fixtures/helpers';
 import { makeSpinResponse } from '../../fixtures/mock-data';
 
-test.describe('Slots Game', () => {
+test.describe('Slots Game @allure.label.parentSuite:Slots_Game @allure.label.suite:Gameplay', () => {
   let game: GamePage;
 
   test.beforeEach(async ({ page, context }) => {

@@ -2,7 +2,7 @@ import { test, expect } from '../base.fixture';
 import { RoundDetailPage } from '../../pages/round-detail.page';
 import { mockAuth, mockImages, mockRoundDetail } from '../../fixtures/helpers';
 
-test.describe('Round Detail', () => {
+test.describe('Round Detail @allure.label.parentSuite:History @allure.label.suite:Round Detail', () => {
   let detail: RoundDetailPage;
 
   test.beforeEach(async ({ page, context }) => {

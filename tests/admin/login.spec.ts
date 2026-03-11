@@ -4,7 +4,7 @@ import { AdminLoginPage } from '../../pages/admin/login.page';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL!;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD!;
 
-test.describe('Admin Login', () => {
+test.describe('Admin Login @allure.label.parentSuite:Admin_Panel @allure.label.suite:Login', () => {
   let login: AdminLoginPage;
 
   test.beforeEach(async ({ page }) => {

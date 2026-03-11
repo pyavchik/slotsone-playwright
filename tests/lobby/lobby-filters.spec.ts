@@ -2,7 +2,7 @@ import { test, expect } from '../base.fixture';
 import { LobbyPage } from '../../pages/lobby.page';
 import { mockAuth, mockImages } from '../../fixtures/helpers';
 
-test.describe('Lobby Filters & Search', () => {
+test.describe('Lobby Filters & Search @allure.label.parentSuite:Lobby @allure.label.suite:Filters', () => {
   let lobby: LobbyPage;
 
   test.beforeEach(async ({ page, context }) => {

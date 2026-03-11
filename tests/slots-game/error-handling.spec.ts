@@ -9,7 +9,7 @@ import {
 } from '../../fixtures/helpers';
 import { makeGameInitResponse } from '../../fixtures/mock-data';
 
-test.describe('Error Handling', () => {
+test.describe('Error Handling @allure.label.parentSuite:Slots_Game @allure.label.suite:Error Handling', () => {
   // ── Spin errors ───────────────────────────────────────────────────────
 
   test.describe('Spin Errors', () => {

@@ -12,7 +12,7 @@ const NAV_ITEMS = [
   { label: 'Settings', path: '/admin/settings' },
 ];
 
-test.describe('Admin Navigation', () => {
+test.describe('Admin Navigation @allure.label.parentSuite:Admin_Panel @allure.label.suite:Navigation', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/admin');
     await page.getByRole('heading', { name: 'Dashboard', level: 1 }).waitFor({ timeout: 15_000 });

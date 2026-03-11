@@ -8,7 +8,7 @@ import {
   mockRegister,
 } from '../../fixtures/helpers';
 
-test.describe('Authentication', () => {
+test.describe('Authentication @allure.label.parentSuite:Auth @allure.label.suite:Login & Register', () => {
   // ── Login ───────────────────────────────────────────────────────────
 
   test('login page renders form', async ({ page }) => {
