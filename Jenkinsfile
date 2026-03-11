@@ -27,19 +27,15 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'npx playwright test || true'
-            }
-        }
-
-        stage('Generate Allure Report') {
-            steps {
-                sh 'allure generate allure-results -o allure-report --clean || true'
+                sh 'npx playwright test'
             }
         }
     }
 
     post {
         always {
+            sh 'allure generate allure-results -o allure-report --clean || true'
+
             publishHTML(target: [
                 reportDir: 'allure-report',
                 reportFiles: 'index.html',
