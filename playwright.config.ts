@@ -1,7 +1,23 @@
 import { defineConfig, devices } from '@playwright/test';
+import * as fs from 'fs';
+import * as path from 'path';
 import dotenv from 'dotenv';
 
 dotenv.config();
+
+// Write Allure environment info
+const allureResultsDir = path.join(__dirname, 'allure-results');
+if (!fs.existsSync(allureResultsDir)) {
+  fs.mkdirSync(allureResultsDir, { recursive: true });
+}
+fs.writeFileSync(
+  path.join(allureResultsDir, 'environment.properties'),
+  [
+    'Browser=Chromium',
+    'Base.URL=https://pyavchik.space',
+    `Environment=${process.env.CI ? 'CI' : 'Local'}`,
+  ].join('\n'),
+);
 
 export default defineConfig({
   testDir: './tests',
@@ -25,33 +41,33 @@ export default defineConfig({
     timeout: 10_000,
   },
   projects: [
-    // Existing non-admin tests
+    // Public site tests (non-admin)
     {
-      name: 'chromium',
+      name: 'Public Site',
       use: { ...devices['Desktop Chrome'] },
       testIgnore: '**/admin/**',
     },
 
     // Admin auth setup
     {
-      name: 'admin-setup',
+      name: 'Admin Setup',
       testMatch: '**/admin/admin.setup.ts',
       use: { ...devices['Desktop Chrome'] },
     },
 
     // Admin login tests (no auth needed)
     {
-      name: 'admin-login',
+      name: 'Admin Login',
       testMatch: '**/admin/login.spec.ts',
       use: { ...devices['Desktop Chrome'] },
     },
 
-    // Admin tests (authenticated via storageState)
+    // Admin panel tests (authenticated via storageState)
     {
-      name: 'admin',
+      name: 'Admin Panel',
       testDir: './tests/admin',
       testIgnore: ['admin.setup.ts', 'login.spec.ts'],
-      dependencies: ['admin-setup'],
+      dependencies: ['Admin Setup'],
       use: {
         ...devices['Desktop Chrome'],
         storageState: '.auth/admin.json',
