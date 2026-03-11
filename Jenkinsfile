@@ -4,6 +4,7 @@ pipeline {
     environment {
         ADMIN_EMAIL    = credentials('admin-email')
         ADMIN_PASSWORD = credentials('admin-password')
+        CI             = 'true'
     }
 
     stages {
@@ -19,13 +20,24 @@ pipeline {
                 sh 'npx playwright test || true'
             }
         }
+
+        stage('Generate Allure Report') {
+            steps {
+                sh 'allure generate allure-results -o allure-report --clean || true'
+            }
+        }
     }
 
     post {
         always {
-            allure includeProperties: false,
-                   jdk: '',
-                   results: [[path: 'allure-results']]
+            publishHTML(target: [
+                reportDir: 'allure-report',
+                reportFiles: 'index.html',
+                reportName: 'Allure Report',
+                keepAll: true,
+                alwaysLinkToLastBuild: true,
+                allowMissing: true
+            ])
 
             publishHTML(target: [
                 reportDir: 'playwright-report',
