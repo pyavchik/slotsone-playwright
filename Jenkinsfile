@@ -35,6 +35,9 @@ pipeline {
     post {
         always {
             sh 'allure generate allure-results -o allure-report --clean || true'
+            sh 'zip -qr allure-report.zip allure-report || true'
+
+            archiveArtifacts artifacts: 'allure-report.zip', allowEmptyArchive: true
 
             publishHTML(target: [
                 reportDir: 'allure-report',
