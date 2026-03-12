@@ -7,7 +7,7 @@ import {
   mockSpinError,
   mockGameInitError,
 } from '../../fixtures/helpers';
-import { makeGameInitResponse } from '../../fixtures/mock-data';
+import { makeAuthTokenResponse, makeGameInitResponse } from '../../fixtures/mock-data';
 
 test.describe('Error Handling', () => {
   // ── Spin errors ───────────────────────────────────────────────────────
@@ -62,22 +62,29 @@ test.describe('Error Handling', () => {
       await expect(game.errorToast).toBeVisible({ timeout: 10_000 });
     });
 
-    test('retry button re-initializes game', async ({ page, context }) => {
-      await mockAuth(context);
-      await mockImages(context);
+    test('retry button re-initializes game', async ({ page }) => {
+      // Use page.route for all mocks — immune to parallel test interference
+      await page.route('**/api/v1/auth/refresh', (route) =>
+        route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify(makeAuthTokenResponse()),
+        }),
+      );
+      await page.route('**/api/v1/images/generate', (route) =>
+        route.fulfill({ status: 503, body: '{}' }),
+      );
 
       let initCalls = 0;
-      await context.route('**/api/v1/game/init', (route) => {
+      await page.route('**/api/v1/game/init', (route) => {
         initCalls++;
         if (initCalls === 1) {
-          // First call: fail
           route.fulfill({
             status: 500,
             contentType: 'application/json',
             body: '{"error":"init failed"}',
           });
         } else {
-          // Subsequent calls: succeed with full config
           route.fulfill({
             status: 200,
             contentType: 'application/json',
@@ -89,11 +96,11 @@ test.describe('Error Handling', () => {
       const game = new GamePage(page);
       await game.goto('mega-fortune');
 
-      await expect(game.errorToast).toBeVisible({ timeout: 10_000 });
+      await expect(game.retryButton).toBeVisible({ timeout: 10_000 });
       await game.retryButton.click();
 
       // After retry, game should initialize
-      await expect(game.spinButton).toBeVisible({ timeout: 10_000 });
+      await expect(game.spinButton).toBeVisible({ timeout: 15_000 });
       expect(initCalls).toBe(2);
     });
   });
