@@ -9,3 +9,13 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# Auth state
+.auth/
+
+# Environment variables
+.env
+
+# Allure reports
+/allure-results/
+/allure-report/
