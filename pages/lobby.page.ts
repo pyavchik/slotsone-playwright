@@ -40,9 +40,9 @@ export class LobbyPage {
     // Filters
     this.searchInput = page.locator('.filters-search-input');
     this.searchClear = page.locator('.filters-search-clear');
-    this.providerSelect = page.locator('.filters-select').nth(0);
-    this.volatilitySelect = page.locator('.filters-select').nth(1);
-    this.sortSelect = page.locator('.filters-select').nth(2);
+    this.providerSelect = page.getByRole('combobox', { name: 'Filter by provider' });
+    this.volatilitySelect = page.getByRole('combobox', { name: 'Filter by volatility' });
+    this.sortSelect = page.getByRole('combobox', { name: 'Sort games' });
     this.clearAllButton = page.locator('.filters-clear-all');
     this.emptyGrid = page.locator('.game-grid-empty');
   }
