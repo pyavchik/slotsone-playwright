@@ -5,11 +5,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Write Allure environment info
+// Clean & recreate allure-results so stale data never pollutes the report
 const allureResultsDir = path.join(__dirname, 'allure-results');
-if (!fs.existsSync(allureResultsDir)) {
-  fs.mkdirSync(allureResultsDir, { recursive: true });
-}
+fs.rmSync(allureResultsDir, { recursive: true, force: true });
+fs.mkdirSync(allureResultsDir, { recursive: true });
 fs.writeFileSync(
   path.join(allureResultsDir, 'environment.properties'),
   [
