@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../base.fixture';
 import { GamePage } from '../../pages/game.page';
 import { mockGameApis } from '../../fixtures/helpers';
 
@@ -38,8 +38,11 @@ test.describe('Paytable', () => {
     await game.openPaytable();
 
     // Navigate forward through all 4 pages
+    await game.paytableNextArrow.hover();
     await game.paytableNextArrow.click();
+    await game.paytableNextArrow.hover();
     await game.paytableNextArrow.click();
+    await game.paytableNextArrow.hover();
     await game.paytableNextArrow.click();
 
     // Should be on last page, next arrow disabled

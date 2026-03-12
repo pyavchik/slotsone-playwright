@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../base.fixture';
 import { AuthPage } from '../../pages/auth.page';
 import {
   mockAuth,

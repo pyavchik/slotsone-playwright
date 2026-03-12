@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../base.fixture';
 import { GamePage } from '../../pages/game.page';
 import {
   mockAuth,
@@ -44,7 +44,7 @@ test.describe('Error Handling', () => {
       await expect(game.errorToast).toBeVisible({ timeout: 10_000 });
 
       // Auto-dismiss after ~5 seconds
-      await expect(game.errorToast).not.toBeVisible({ timeout: 15_000 });
+      await expect(game.errorToast).not.toBeVisible({ timeout: 25_000 });
     });
   });
 

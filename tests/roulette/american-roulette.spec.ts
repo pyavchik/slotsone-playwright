@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../base.fixture';
 import { AmericanRoulettePage } from '../../pages/american-roulette.page';
 import { mockAmericanRouletteApis } from '../../fixtures/helpers';
 
