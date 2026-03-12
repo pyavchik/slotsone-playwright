@@ -45,11 +45,11 @@ export class HistoryPage {
     this.title = page.locator('.gh-title');
 
     this.summaryCards = page.locator('.gh-summary-card');
-    this.totalRounds = page.locator('.gh-summary-card').nth(0).locator('.gh-summary-value');
-    this.totalWagered = page.locator('.gh-summary-card').nth(1).locator('.gh-summary-value');
-    this.totalWon = page.locator('.gh-summary-card').nth(2).locator('.gh-summary-value');
-    this.netResult = page.locator('.gh-summary-card').nth(3).locator('.gh-summary-value');
-    this.biggestWin = page.locator('.gh-summary-card').nth(4).locator('.gh-summary-value');
+    this.totalRounds = page.locator('.gh-summary-card', { hasText: 'Total Rounds' }).locator('.gh-summary-value');
+    this.totalWagered = page.locator('.gh-summary-card', { hasText: 'Total Wagered' }).locator('.gh-summary-value');
+    this.totalWon = page.locator('.gh-summary-card', { hasText: 'Total Won' }).locator('.gh-summary-value');
+    this.netResult = page.locator('.gh-summary-card', { hasText: 'Net Result' }).locator('.gh-summary-value');
+    this.biggestWin = page.locator('.gh-summary-card', { hasText: 'Biggest Win' }).locator('.gh-summary-value');
 
     this.filtersToggle = page.locator('.gh-filters-toggle');
     this.filtersSection = page.locator('.gh-filters');
