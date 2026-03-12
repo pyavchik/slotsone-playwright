@@ -38,9 +38,9 @@ export class AmericanRoulettePage {
   readonly payoutGuide: Locator;
 
   constructor(private page: Page) {
-    this.balanceDisplay = page.locator('.ar-hud-item').first();
-    this.totalBetDisplay = page.locator('.ar-hud-item').nth(1);
-    this.lastWinDisplay = page.locator('.ar-hud-item').nth(2);
+    this.balanceDisplay = page.locator('.ar-hud-item', { hasText: 'Balance' });
+    this.totalBetDisplay = page.locator('.ar-hud-item', { hasText: 'Total Bet' });
+    this.lastWinDisplay = page.locator('.ar-hud-item', { hasText: 'Last Win' });
     this.lobbyButton = page.locator('.ar-lobby-btn');
 
     this.chips = page.locator('.ar-chip');

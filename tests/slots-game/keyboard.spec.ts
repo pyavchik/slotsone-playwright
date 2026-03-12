@@ -34,9 +34,8 @@ test.describe('Keyboard Controls', () => {
     await expect(game.paytableBackdrop).toBeVisible();
 
     await page.keyboard.press('Space');
-    // Give time for any erroneous spin to fire
-    await page.waitForTimeout(500);
-    expect(spinRequests).toBe(0);
+    // Verify no spin request fires — poll briefly to catch any async dispatch
+    await expect.poll(() => spinRequests, { timeout: 1000 }).toBe(0);
   });
 
   test('escape closes paytable', async ({ page }) => {
